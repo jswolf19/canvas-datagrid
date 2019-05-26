@@ -2323,6 +2323,15 @@
                     grid.setFilter('num', '1');
                     done(assertIf(grid.data.length !== 1, 'Expected to see only 1 record.'));
                 });
+                it('Should tolerate string for second argument of setFilter for number type', function (done) {
+                    var grid = g({
+                        test: this.test,
+                        data: [{ num: 1234 }, { num: 1 }],
+                        schema: [{ name: 'num', type: 'number' }],
+                    });
+                    grid.setFilter('num', '1');
+                    done(assertIf(grid.data.length !== 1, 'Expected to see 1 record.'));
+                });
             });
             describe('Attributes', function () {
                 it('Should store JSON view state data when a name is passed and view state is altered.', function (done) {
