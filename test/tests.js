@@ -1674,6 +1674,21 @@
                     grid.controlInput.dispatchEvent(ev);
                     done(assertIf(grid.scrollTop !== grid.findRowScrollTop(3), 'Expected row 3 to be at scroll top.'));
                 });
+                it('Arrow up when active cell is at the top of the scroll window with more rows above should scroll up one row', function (done) {
+                    var ev, grid = g({
+                        test: this.test,
+                        data: makeData(10, 3)
+                    });
+
+                    grid.scrollIntoView(0, 3);
+                    grid.setActiveCell(0, 3);
+                    grid.focus();
+
+                    ev = new Event('keydown');
+                    ev.keyCode = kcs.up;
+                    grid.controlInput.dispatchEvent(ev);
+                    done(assertIf(grid.scrollTop !== grid.findRowScrollTop(2), 'Expected row 2 to be at scroll top.'));
+                });
                 it('Shift and Arrow down should add the selection down one', function (done) {
                     var ev, grid = g({
                         test: this.test,
