@@ -1627,6 +1627,20 @@
                     grid.controlInput.dispatchEvent(ev);
                     done(assertIf(grid.activeCell.columnIndex !== 0, 'Expected the active cell to move.'));
                 });
+                it('Arrow down when active cell is at the bottom of the scroll window with more rows below should scroll down one page', function (done) {
+                    var ev, grid = g({
+                        test: this.test,
+                        data: makeData(10, 3)
+                    });
+
+                    grid.setActiveCell(0, 2);
+                    grid.focus();
+
+                    ev = new Event('keydown');
+                    ev.keyCode = kcs.down;
+                    grid.controlInput.dispatchEvent(ev);
+                    done(assertIf(grid.scrollTop !== grid.findRowScrollTop(3), 'Expected row 3 to be at scroll top.'));
+                });
                 it('Shift and Arrow down should add the selection down one', function (done) {
                     var ev, grid = g({
                         test: this.test,
