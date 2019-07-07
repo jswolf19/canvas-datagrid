@@ -796,6 +796,39 @@
                             || grid.isCellVisible({x: 0, y: 20}),
                                 'Expected column to be a little narrower.'));
                 });
+                it('scrollIntoView should do nothing when cell is visible', function (done) {
+                    var grid = g({
+                        test: this.test,
+                        data: makeData(10, 5)
+                    });
+
+                    var scrollTop = grid.scrollTop;
+                    var scrollLeft = grid.scrollLeft;
+                    grid.scrollIntoView(0, 0);
+                    done(assertIf(grid.scrollTop !== scrollTop || grid.scrollLeft !== scrollLeft, 'Expected scroll window to not move.'));
+                });
+                it('scrollIntoView should scroll vertically when cell is not fully visible', function (done) {
+                    var grid = g({
+                        test: this.test,
+                        data: makeData(10, 5)
+                    });
+
+                    var scrollTop = grid.scrollTop;
+                    var scrollLeft = grid.scrollLeft;
+                    grid.scrollIntoView(0, 3);
+                    done(assertIf(grid.scrollTop <= scrollTop || grid.scrollLeft !== scrollLeft, 'Expected scroll window to move down.'));
+                });
+                it('scrollIntoView should scroll horizontally when cell is not fully visible', function (done) {
+                    var grid = g({
+                        test: this.test,
+                        data: makeData(10, 5)
+                    });
+
+                    var scrollTop = grid.scrollTop;
+                    var scrollLeft = grid.scrollLeft;
+                    grid.scrollIntoView(2, 0);
+                    done(assertIf(grid.scrollTop !== scrollTop || grid.scrollLeft <= scrollLeft, 'Expected scroll window to move right.'));
+                });
             });
             describe('Context menu', function () {
                 it('Should produce a context menu', function (done) {
