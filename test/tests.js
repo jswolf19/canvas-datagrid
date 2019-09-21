@@ -2493,6 +2493,25 @@
 
                     done(assertIf(grid.data.length !== 1, 'Expected to see only 1 record.'));
                 });
+                it('Test case for issue #241: Appending data with filters applied', function (done) {
+                    var grid = g({ test: this.test }), x, data = [], d, i, c;
+                    c = ['a', 'b', 'c', 'd'];
+                    for (x = 0; x < 10; x += 1) {
+                        d = {};
+                        for (i = 0; i < c.length; i += 1) {
+                            d[c[i]] = '' + ((i + 10) * 10) % (x + 10);
+                        }
+                        data.push(d);
+                    }
+                    grid.data = data;
+                    grid.setFilter('b', '/1/');
+
+                    grid.data = data.concat(grid.data);
+
+                    grid.setFilter();
+
+                    done(assertIf(grid.data.length !== 20, 'Expected to see 20 records.'));
+                });
             });
             describe('Attributes', function () {
                 it('Should store JSON view state data when a name is passed and view state is altered.', function (done) {
