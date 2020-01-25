@@ -287,7 +287,7 @@
                         data: smallData()
                     });
                     grid.style.activeCellBackgroundColor = c.b;
-                    assertIf(grid.data.length !== 3,
+                    assertIf(grid.viewData.length !== 3,
                         'Expected to see data in the interface.');
                     assertPxColor(grid, 80, 32, c.b, done);
                 });
@@ -301,7 +301,7 @@
                             component: true
                         });
                         grid.style.activeCellBackgroundColor = c.b;
-                        assertIf(grid.data.length !== 3,
+                        assertIf(grid.viewData.length !== 3,
                             'Expected to see data in the interface.');
                         assertPxColor(grid, 80, 32, c.b, done);
                     });
@@ -312,7 +312,7 @@
                             component: true
                         });
                         grid.style['active-cell-background-color'] = c.b;
-                        assertIf(grid.data.length !== 3,
+                        assertIf(grid.viewData.length !== 3,
                             'Expected to see data in the interface.');
                         assertPxColor(grid, 80, 32, c.b, done);
                     });
@@ -323,7 +323,7 @@
                             component: true
                         });
                         grid.style['--cdg-active-cell-background-color'] = c.b;
-                        assertIf(grid.data.length !== 3,
+                        assertIf(grid.viewData.length !== 3,
                             'Expected to see data in the interface.');
                         assertPxColor(grid, 80, 32, c.b, done);
                     });
@@ -335,7 +335,7 @@
                         });
                         grid.style.gridBackgroundColor = c.b;
                         grid.schema = [{name: 'a', width: 30}];
-                        assertIf(grid.data.length !== 1,
+                        assertIf(grid.viewData.length !== 1,
                             'Expected to see data in the interface.');
                         assertPxColor(grid, 80, 32, c.b, done);
                     });
@@ -405,7 +405,7 @@
                         {'a': 4, 'b': 5, 'c': 6},
                         {'a': 7, 'b': 8, 'c': 9}
                     ];
-                    done(assertIf(grid.data[2].c !== 9,
+                    done(assertIf(grid.viewData[2].c !== 9,
                         'Expected grid to be able to import and export this format'));
                 });
                 it('Pass array that contain other arrays of objects.', function (done) {
@@ -443,7 +443,7 @@
                         test: this.test
                     });
                     grid.data = [['a', 'b', 'c'], ['1', '2'], ['q']];
-                    done(assertIf(grid.data[0][0] !== 'a',
+                    done(assertIf(grid.viewData[0][0] !== 'a',
                         'Expected grid to be able to import and export this format'));
                 });
             });
@@ -474,7 +474,7 @@
                         name: 'f',
                         defaultValue: 'g'
                     }, 1);
-                    done(assertIf(grid.schema[1].name !== 'f' || grid.data[0].f !== 'g',
+                    done(assertIf(grid.schema[1].name !== 'f' || grid.viewData[0].f !== 'g',
                         'Expected to see a specific column here, it is not here.'));
                 });
                 it('Use a function as a default value', function (done) {
@@ -487,7 +487,7 @@
                         name: 'f',
                         defaultValue: function () { return 'g'; }
                     }, 1);
-                    done(assertIf(grid.schema[1].name !== 'f' || grid.data[0].f !== 'g',
+                    done(assertIf(grid.schema[1].name !== 'f' || grid.viewData[0].f !== 'g',
                         'Expected to see a specific column here, it is not here.'));
                 });
                 it('Autosize a column', function (done) {
@@ -611,7 +611,7 @@
                         }),
                         n = Object.keys(smallData()[0])[0];
                     grid.deleteColumn(0);
-                    done(assertIf(Object.keys(grid.data[0])[0] === n || grid.schema[0].name === n,
+                    done(assertIf(Object.keys(grid.viewData[0])[0] === n || grid.schema[0].name === n,
                         'Expected to see column 0 deleted, but it appears to still be there.'));
                 });
                 it('Add column', function (done) {
@@ -625,7 +625,7 @@
                         defaultValue: 'g'
                     });
                     l = grid.schema.length - 1;
-                    done(assertIf(grid.schema[l].name !== 'f' || grid.data[0].f !== 'g',
+                    done(assertIf(grid.schema[l].name !== 'f' || grid.viewData[0].f !== 'g',
                         'Expected to see a specific column here, it is not here.'));
                 });
                 it('Add row', function (done) {
@@ -635,8 +635,8 @@
                         schema: [{name: 'd'}, {name: 'e', defaultValue: 10}]
                     });
                     grid.addRow({d: '1'});
-                    l = grid.data.length - 1;
-                    done(assertIf(grid.data[l].d !== '1' || grid.data[l].e !== 10,
+                    l = grid.viewData.length - 1;
+                    done(assertIf(grid.viewData[l].d !== '1' || grid.viewData[l].e !== 10,
                         'Expected to see a specific row here, it is not here.'));
                 });
                 it('Insert row', function (done) {
@@ -646,7 +646,7 @@
                         schema: [{name: 'd'}, {name: 'e', defaultValue: 10}]
                     });
                     grid.insertRow({d: '6'}, 1);
-                    done(assertIf(grid.data[2].d !== '3' || grid.data[1].e !== 10,
+                    done(assertIf(grid.viewData[2].d !== '3' || grid.viewData[1].e !== 10,
                         'Expected to see a specific row here, it is not here.'));
                 });
                 it('Should throw an error if insertRow is passed a bad index', function (done) {
@@ -670,7 +670,7 @@
                         data: [{d: '1'}, {d: '2'}]
                     });
                     grid.deleteRow(1);
-                    done(assertIf(grid.data.length !== 1 || grid.data[0].d !== '1',
+                    done(assertIf(grid.viewData.length !== 1 || grid.viewData[0].d !== '1',
                         'Expected to see only 1 row, expected row 1 to contain a specific value.'));
                 });
                 it('Set row height', function (done) {
@@ -818,7 +818,7 @@
                     grid.addEventListener('contextmenu', function (e) {
                         setTimeout(function () {
                             e.items[4].contextItemContainer.dispatchEvent(new Event('click'));
-                            done(assertIf(grid.data[0].col1 !== 'bar',
+                            done(assertIf(grid.viewData[0].col1 !== 'bar',
                                 'Expected the content to be reordered asc.'));
                         }, 1);
                     });
@@ -975,7 +975,7 @@
                                 ev.keyCode = kcs[kk];
                                 i.dispatchEvent(ev);
                                 if (kk === 'enter') {
-                                    err = assertIf(grid.data[0].col1 !== 'baz', 'Expected key combination to filter for baz');
+                                    err = assertIf(grid.viewData[0].col1 !== 'baz', 'Expected key combination to filter for baz');
                                 }
                             });
                             done(err);
@@ -1000,7 +1000,7 @@
                                 ev.keyCode = kcs[kk];
                                 i.dispatchEvent(ev);
                                 if (kk === 'enter') {
-                                    err = assertIf(grid.data[0].col1 !== 'bar', 'Expected key combination to filter for bar');
+                                    err = assertIf(grid.viewData[0].col1 !== 'bar', 'Expected key combination to filter for bar');
                                 }
                             });
                             done(err);
@@ -1025,7 +1025,7 @@
                                 ev.keyCode = kcs[kk];
                                 i.dispatchEvent(ev);
                                 if (kk === 'tab') {
-                                    err = assertIf(grid.data[0].col1 !== 'foo', 'Expected key combination to filter for bar');
+                                    err = assertIf(grid.viewData[0].col1 !== 'foo', 'Expected key combination to filter for bar');
                                 }
                             });
                             done(err);
@@ -1050,7 +1050,7 @@
                                 ev.keyCode = kcs[kk];
                                 i.dispatchEvent(ev);
                                 if (kk === 'esc') {
-                                    err = assertIf(grid.data[0].col1 !== 'foo', 'Expected key combination to filter for bar');
+                                    err = assertIf(grid.viewData[0].col1 !== 'foo', 'Expected key combination to filter for bar');
                                 }
                             });
                             done(err);
@@ -1437,7 +1437,7 @@
                     ev.keyCode = kcs.enter;
                     grid.input.value = 'blah';
                     grid.addEventListener('endedit', function (e) {
-                        done(assertIf(grid.data[0].d !== 'blah', 'Expected value to be in data'));
+                        done(assertIf(grid.viewData[0].d !== 'blah', 'Expected value to be in data'));
                     });
                     grid.input.dispatchEvent(ev);
                 });
@@ -1453,7 +1453,7 @@
                     grid.input.value = 'blah';
                     grid.addEventListener('beforeendedit', function (e) {
                         e.abort();
-                        done(assertIf(grid.data[0].d === 'blah', 'Expected value to be in data'));
+                        done(assertIf(grid.viewData[0].d === 'blah', 'Expected value to be in data'));
                     });
                     grid.input.dispatchEvent(ev);
                 });
@@ -1907,7 +1907,7 @@
                         schema: [{name: 'a', type: 'string'}]
                     });
                     grid.order('a', 'desc');
-                    done(assertIf(grid.data[0].a !== 'd', 'expected to see sort by string desc'));
+                    done(assertIf(grid.viewData[0].a !== 'd', 'expected to see sort by string desc'));
                 });
                 it('Should sort numbers', function (done) {
                     var grid = g({
@@ -1916,7 +1916,7 @@
                         schema: [{name: 'a', type: 'number'}]
                     });
                     grid.order('a', 'desc');
-                    done(assertIf(grid.data[0].a !== 5, 'expected to see sort by number desc'));
+                    done(assertIf(grid.viewData[0].a !== 5, 'expected to see sort by number desc'));
                 });
                 it('Should sort date', function (done) {
                     var grid = g({
@@ -1929,7 +1929,7 @@
                         return new Date(e.cell.value).toISOString();
                     };
                     grid.order('a', 'desc');
-                    done(assertIf(grid.data[0].a !== 1503307136397, 'expected to see sort by date desc'));
+                    done(assertIf(grid.viewData[0].a !== 1503307136397, 'expected to see sort by date desc'));
                 });
                 it('Should set orderBy', function (done) {
                     var grid = g({
@@ -1963,7 +1963,7 @@
                         formatters: { xxx: function (e) { return e.cell.value.toString(); }}
                     });
                     grid.order('a', 'desc');
-                    done(assertIf(grid.data[0].a !== '2', 'expected to see sort by string desc'));
+                    done(assertIf(grid.viewData[0].a !== '2', 'expected to see sort by string desc'));
                 });
                 it('Should preserve current sort order, effectively allowing sort on multiple columns', function (done) {
                     var grid = g({
@@ -1973,7 +1973,7 @@
                     });
                     grid.order('a', 'desc');
                     grid.order('b', 'asc');
-                    done(assertIf(grid.data[0].a !== 'b', 'expected to see sort by a desc then b asc'));
+                    done(assertIf(grid.viewData[0].a !== 'b', 'expected to see sort by a desc then b asc'));
                 });
                 it('Should throw when a nonexistant column name is passed', function (done) {
                     var grid = g({
@@ -1999,10 +1999,10 @@
                     grid.addEventListener('beforesortcolumn', function (e) {
                         err = assertIf(e.name !== 'a', 'name should be "a" but was "%s"', e.column) ||
                               assertIf(e.direction !== 'desc', 'direction should be "desc" but was "%s"', e.direction) ||
-                              assertIf(grid.data[0].a !== 'a', 'expected data to not be sorted in event');
+                            assertIf(grid.viewData[0].a !== 'a', 'expected data to not be sorted in event');
                     });
                     grid.order('a', 'desc');
-                    done(err || assertIf(grid.data[0].a !== 'c', 'expected data to be sorted'));
+                    done(err || assertIf(grid.viewData[0].a !== 'c', 'expected data to be sorted'));
                 });
                 it('Should not sort when beforesortcolumn prevents default', function (done) {
                     var grid = g({
@@ -2012,7 +2012,7 @@
                     });
                     grid.addEventListener('beforesortcolumn', function (e) { e.preventDefault(); });
                     grid.order('a', 'desc');
-                    done(assertIf(grid.data[0].a !== 'a', 'expected no change in sort order'));
+                    done(assertIf(grid.viewData[0].a !== 'a', 'expected no change in sort order'));
                 });
                 it('Should raise sortcolumn event after sort', function (done) {
                     var grid = g({
@@ -2023,7 +2023,7 @@
                     grid.addEventListener('sortcolumn', function (e) {
                         done(assertIf(e.name !== 'a', 'name should be "a" but was "%s"', e.column) ||
                              assertIf(e.direction !== 'desc', 'direction should be "desc" but was "%s"', e.direction) ||
-                             assertIf(grid.data[0].a !== 'c', 'expected data to be sorted'));
+                            assertIf(grid.viewData[0].a !== 'c', 'expected data to be sorted'));
                     });
                     grid.order('a', 'desc');
                 });
@@ -2067,7 +2067,7 @@
                         }]
                     });
                     grid.order('a', 'desc');
-                    done(assertIf(grid.data[0].a !== 'cd', 'expected schema sorter to be used'));
+                    done(assertIf(grid.viewData[0].a !== 'cd', 'expected schema sorter to be used'));
                 });
                 it('Should reapply current sort after data set', function (done) {
                     var grid = g({
@@ -2078,7 +2078,7 @@
                     grid.order('a', 'desc');
                     grid.order('b', 'asc');
                     grid.data = [{ a: 'a', b: 'a' }, { a: 'b', b: 'a' }, { a: 'c', b: 'b' }];
-                    done(assertIf(grid.data[0].a !== 'b', 'expected to see sort by a desc then b asc'));
+                    done(assertIf(grid.viewData[0].a !== 'b', 'expected to see sort by a desc then b asc'));
                 });
                 it('Should reapply current sort after filter', function (done) {
                     var grid = g({
@@ -2088,7 +2088,7 @@
                     });
                     grid.order('a', 'desc');
                     grid.setFilter('b', 'a');
-                    done(assertIf(grid.data[0].a !== 'b', 'expected to see sort by a desc then b asc'));
+                    done(assertIf(grid.viewData[0].a !== 'b', 'expected to see sort by a desc then b asc'));
                 });
             });
             describe('Selections', function () {
@@ -2402,7 +2402,7 @@
                         data: [{d: 'abcd'}, {d: 'edfg'}]
                     });
                     grid.setFilter('d', 'edfg');
-                    done(assertIf(grid.data.length === 0 && grid.data[0].d === 'edfg',
+                    done(assertIf(grid.viewData.length === 0 && grid.viewData[0].d === 'edfg',
                         'Expected filter to remove all but 1 row.'));
                 });
                 it('Should remove all filters', function (done) {
@@ -2413,7 +2413,7 @@
                     grid.setFilter('d', 'edfg');
                     grid.setFilter('e', 'asdfg');
                     grid.setFilter();
-                    done(assertIf(grid.data.length !== 2, 'Expected to see all the records return.'));
+                    done(assertIf(grid.viewData.length !== 2, 'Expected to see all the records return.'));
                 });
                 it('Should remove a specific filter by passing empty string', function (done) {
                     var grid = g({
@@ -2423,7 +2423,7 @@
                     grid.setFilter('d', 'edfg');
                     grid.setFilter('e', 'asdfg');
                     grid.setFilter('e', '');
-                    done(assertIf(grid.data.length !== 1, 'Expected to see 1 of the records.'));
+                    done(assertIf(grid.viewData.length !== 1, 'Expected to see 1 of the records.'));
                 });
                 it('Should remove a specific filter by passing undefined', function (done) {
                     var grid = g({
@@ -2433,7 +2433,7 @@
                     grid.setFilter('d', 'edfg');
                     grid.setFilter('e', 'asdfg');
                     grid.setFilter('e');
-                    done(assertIf(grid.data.length !== 1, 'Expected to see 1 of the records.'));
+                    done(assertIf(grid.viewData.length !== 1, 'Expected to see 1 of the records.'));
                 });
                 it('Should use RegExp as a filter', function (done) {
                     var grid = g({
@@ -2441,7 +2441,7 @@
                         data: [{d: 'abcd'}, {d: 'edfg'}]
                     });
                     grid.setFilter('d', '/\\w/');
-                    done(assertIf(grid.data.length === 0 && grid.data[0].d === 'edfg',
+                    done(assertIf(grid.viewData.length === 0 && grid.viewData[0].d === 'edfg',
                         'Expected to see a row after a RegExp value.'));
                 });
                 it('Should tolerate RegExp errors', function (done) {
@@ -2459,7 +2459,7 @@
                     });
                     grid.setFilter('d', 'a');
                     grid.setFilter('x', 'a');
-                    done(assertIf(grid.data.length !== 1, 'Expected to see only 1 record.'));
+                    done(assertIf(grid.viewData.length !== 1, 'Expected to see only 1 record.'));
                 });
                 it('Should apply correct type filtering method when column filter not set', function (done) {
                     var grid = g({
@@ -2470,7 +2470,7 @@
                     });
                     delete grid.schema[0].filter;
                     grid.setFilter('num', '1');
-                    done(assertIf(grid.data.length !== 1, 'Expected to see only 1 record.'));
+                    done(assertIf(grid.viewData.length !== 1, 'Expected to see only 1 record.'));
                 });
                 it('Should apply filter to new data when data is set', function (done) {
                     var grid = g({
@@ -2479,7 +2479,7 @@
                     });
                     grid.setFilter('d', 'a');
                     grid.data = [{ d: 'gfde' }, { d: 'dcba' }]
-                    done(assertIf(grid.data.length !== 1, 'Expected to see only 1 record.'));
+                    done(assertIf(grid.viewData.length !== 1, 'Expected to see only 1 record.'));
                 });
                 it('Should retain filters of columns not in new data when data is set', function (done) {
                     var grid = g({
@@ -2491,7 +2491,7 @@
                     grid.data = [{ x: 'aaaa' }, { x: 'aaaa' }]
                     grid.data = [{ d: 'gfde' }, { d: 'dcba' }]
 
-                    done(assertIf(grid.data.length !== 1, 'Expected to see only 1 record.'));
+                    done(assertIf(grid.viewData.length !== 1, 'Expected to see only 1 record.'));
                 });
             });
             describe('Attributes', function () {
@@ -2568,7 +2568,7 @@
                         data: [{a: 'a'}]
                     });
                     grid.style.cellBackgroundColor = c.y;
-                    assertIf(grid.data.length !== 1, 'Expected there to be exactly 1 row.');
+                    assertIf(grid.viewData.length !== 1, 'Expected there to be exactly 1 row.');
                     assertPxColor(grid, 60, 60, c.y, done);
                 });
                 it('Should insert data into the new row', function (done) {
@@ -2585,7 +2585,7 @@
                     grid.input.dispatchEvent(ev);
                     assertPxColor(grid, 60, 90, c.y, function (err) {
                         if (err) { return done(err); }
-                        done(assertIf(grid.data.length !== 2,
+                        done(assertIf(grid.viewData.length !== 2,
                             'expected there to be exactly 3 row.'));
                     });
                 });
@@ -2629,7 +2629,7 @@
                                 grid = g(a);
                                 localStorage.removeItem(k);
                                 setTimeout(function () {
-                                    done(assertIf(grid.data[0].col1 !== 'bar',
+                                    done(assertIf(grid.viewData[0].col1 !== 'bar',
                                         'Expected data to be ordered when new grid is created'));
                                 }, 1);
                             }, 1);
@@ -2750,7 +2750,7 @@
                             click(grid.canvas, 67, 10);
                             setTimeout(function () {
                                 setTimeout(function () {
-                                    done(assertIf(grid.data[0].col1 !== 'foo',
+                                    done(assertIf(grid.viewData[0].col1 !== 'foo',
                                         'Expected data to be ordered when new grid is created'));
                                 }, 1);
                             }, 1);
@@ -2897,7 +2897,7 @@
                     marker(grid, 60, 12);
                     mousemove(grid.canvas, 60, 12);
                     click(grid.canvas, 60, 12);
-                    done(assertIf(grid.data[0].col1 !== 'bar', 'Expected data to be sorted.'));
+                    done(assertIf(grid.viewData[0].col1 !== 'bar', 'Expected data to be sorted.'));
                 });
                 it('Clicking a header cell with columnHeaderClickBehavior set to select should select the column', function (done) {
                     var grid = g({
