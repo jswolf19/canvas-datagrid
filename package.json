@@ -54,6 +54,7 @@
     "@babel/preset-env": "^7.12.7",
     "babel-loader": "^8.2.1",
     "chai": "^4.2.0",
+    "eslint": "^7.14.0",
     "istanbul": "^0.4.5",
     "jsdoc": "^3.6.6",
     "karma": "^5.2.3",
