@@ -1536,7 +1536,7 @@
                                         || data.indexOf('Text with') === -1, 'Expected data from the grid to be placed into the fake clipboard.'));
                                 }
                             },
-                            preventDefault: () => null // noop so the call in addCellValue doesn't cause an error
+                            preventDefault: function() { return null } // noop so the call in addCellValue doesn't cause an error
                         });
                     }, 1);
                 });
