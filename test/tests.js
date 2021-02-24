@@ -2588,11 +2588,11 @@
                         data: [{ d: 'abcd' }, { d: null }, { d: undefined }, { d: '' }, { d: '       ' }, { d: 'edfg' }]
                     });
                     grid.setFilter('d', '(Blanks)');
-                    var filteredValuesOnly = grid.data.map(obj => obj.d);
-                    var onlyBlanks = filteredValuesOnly.length === 4 && filteredValuesOnly.every(item => [undefined, null, '', '       '].includes(item))
+                    var filteredValuesOnly = grid.data.map(function(obj) { return obj.d });
+                    var onlyBlanks = filteredValuesOnly.length === 4 && filteredValuesOnly.every(function(item) { return [undefined, null, '', '       '].includes(item) })
                     done(assertIf(
                         !onlyBlanks,
-                        'Expected filter remove non-null/empty values'),
+                        'Expected filter remove non-null/empty values')
                     );
                 });
                 it('Should filter for blank values (numbers)', function (done) {
@@ -2602,11 +2602,11 @@
                         schema: [{ name: 'd', type: 'number' }],
                     });
                     grid.setFilter('d', '(Blanks)');
-                    var filteredValuesOnly = grid.data.map(obj => obj.d);
-                    var onlyBlanks = filteredValuesOnly.length === 3 && filteredValuesOnly.every(item => [undefined, null, ''].includes(item))
+                    var filteredValuesOnly = grid.data.map(function(obj) { return obj.d });
+                    var onlyBlanks = filteredValuesOnly.length === 3 && filteredValuesOnly.every(function(item) { return [undefined, null, ''].includes(item) })
                     done(assertIf(
                         !onlyBlanks,
-                        'Expected filter remove non-null/empty values'),
+                        'Expected filter remove non-null/empty values')
                     );
                 });
                 it('Should remove all filters', function (done) {
